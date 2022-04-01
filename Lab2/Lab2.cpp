@@ -20,15 +20,14 @@ static void RenderSceneCB()
     Scale += 0.001f;
     glm::mat4x4 World;
 
-    World[0][0] = 1.0f; World[0][1] = 0.0f; World[0][2] = 0.0f; World[0][3] = sinf(Scale);
-    World[1][0] = 0.0f; World[1][1] = 1.0f; World[1][2] = 0.0f; World[1][3] = 0.0f;
-    World[2][0] = 0.0f; World[2][1] = 0.0f; World[2][2] = 1.0f; World[2][3] = 0.0f;
-    World[3][0] = 0.0f; World[3][1] = 0.0f; World[3][2] = 0.0f; World[3][3] = 1.0f;
+    World[0][0] = cosf(Scale); World[0][1] = -sinf(Scale); World[0][2] = 0.0f; World[0][3] = 0.0f;
+    World[1][0] = sinf(Scale); World[1][1] = cosf(Scale);  World[1][2] = 0.0f; World[1][3] = 0.0f;
+    World[2][0] = 0.0f;        World[2][1] = 0.0f;         World[2][2] = 1.0f; World[2][3] = 0.0f;
+    World[3][0] = 0.0f;        World[3][1] = 0.0f;         World[3][2] = 0.0f; World[3][3] = 1.0f;
 
-    Vertices[0] = glm::vec4(Vertices[0], 1.0f) * World;
-    Vertices[1] = glm::vec4(Vertices[1], 1.0f) * World;
-    Vertices[2] = glm::vec4(Vertices[2], 1.0f) * World;
-
+    Vertices[0] = World * glm::vec4(Vertices[0], 1.0f);
+    Vertices[1] = World * glm::vec4(Vertices[1], 1.0f);
+    Vertices[2] = World * glm::vec4(Vertices[2], 1.0f);
 
     
     glGenBuffers(1, &VBO); //генерация объектов перемен. типов(Кол-во объектов и сслыка на массив)
